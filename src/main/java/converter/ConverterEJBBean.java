@@ -6,12 +6,15 @@ import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
+@Remote
 @Stateless(name = "ConverterEJBEJB")
 public class ConverterEJBBean implements IConverter{
     public ConverterEJBBean() {

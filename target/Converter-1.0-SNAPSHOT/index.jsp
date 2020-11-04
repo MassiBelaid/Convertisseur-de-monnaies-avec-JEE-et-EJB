@@ -19,7 +19,8 @@
         <label for="montant">Montant en euro a convertire </label>
         <input type="number" name="montant" id="montant" required>
 
-        <select name="money">
+        <label for="money">Monnaie souhaitée </label>
+        <select name="money" id="money">
             <option value="USD">USD</option>
             <option value="JPY">JPY</option>
             <option value="BGN">BGN</option>
