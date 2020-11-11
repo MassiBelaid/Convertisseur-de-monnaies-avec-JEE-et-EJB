@@ -1,5 +1,12 @@
 package converter;
 
+import modele.Monnaie;
+
+import java.util.List;
+import java.util.Map;
+
 public interface IConverter {
-    public double euroToOtherCurrency(double amount, String currencyCode);
+    double euroToOtherCurrency(double amount, String currencyCode);
+    List<Monnaie> getAvailableCurrencies();
+    Map<Monnaie,Double> euroToOtherCurrencies(double amount);
 }
