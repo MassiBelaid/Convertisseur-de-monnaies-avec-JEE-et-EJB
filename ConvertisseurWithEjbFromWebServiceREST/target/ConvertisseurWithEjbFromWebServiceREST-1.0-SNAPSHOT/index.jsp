@@ -16,8 +16,6 @@
     <jsp:useBean class="converter.ConverterEJBBean" id="onverterEJBEJB"/>
     <%@page import="java.util.*" %>
     <%@page import="modele.Monnaie" %>
-    <%@page import="javax.naming.*" %>
-    <%@page import="javax.jms.*" %>
 
     <form action="index.jsp" method="post">
         <label for="montant">Montant en euro a convertire </label>
@@ -67,10 +65,6 @@
 
 
 
-        <label for="email">Entrez votre adresse email </label>
-        <input type="email" class="form-control" name="email" id="email"
-			   placeholder="Entrez votre email si vous souhaiter recevoir la conversion vers toutes monnaies disponible">
-
         <input type="submit" value="Convertir" class="btn btn-primary"/>
     </form>
 
@@ -79,24 +73,6 @@
         double amount = Double.parseDouble(request.getParameter("montant"));
         String money = request.getParameter("money");
 
-        String email = request.getParameter("email");
-        if(email != null && email.length() > 0){
-            Context jndiContext = new InitialContext();
-            javax.jms.ConnectionFactory connectionFactory =
-                    (QueueConnectionFactory) jndiContext.lookup("/ConnectionFactory");
-
-            Connection connection = connectionFactory.createConnection();
-            Session sessionQ = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-            TextMessage message = sessionQ.createTextMessage();
-            message.setText(amount+"#"+email);
-
-            javax.jms.Queue queue = (javax.jms.Queue)jndiContext.lookup("queue/MailContent");
-
-            MessageProducer messageProducer = sessionQ.createProducer(queue);
-            messageProducer.send(message);
-            out.print("Mail envoyé à : "+email);
-        }
 
         //out.println("<p>"+amount+"   "+money+"</p>");
         double amountResult = onverterEJBEJB.euroToOtherCurrency(amount,money);
